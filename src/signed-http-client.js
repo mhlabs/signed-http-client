@@ -5,8 +5,13 @@ const baseurl = process.env.ApiBaseUrl;
 const region = process.env.AWS_REGION || 'eu-west-1';
 
 const buildRequest = (method, path, data) => {
+  
   if (!baseurl) {
     throw Error('Environment variable "ApiBaseUrl" is not set!');
+  }
+
+  if (baseurl.startsWith('https://')) {
+    baseurl = baseurl.replace('https://', '');
   }
 
   const request = {
