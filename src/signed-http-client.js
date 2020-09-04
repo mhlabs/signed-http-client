@@ -1,11 +1,10 @@
 const axios = require('axios');
 const aws4 = require('aws4');
 
-const baseurl = process.env.ApiBaseUrl;
+let baseurl = process.env.ApiBaseUrl;
 const region = process.env.AWS_REGION || 'eu-west-1';
 
 const buildRequest = (method, path, data) => {
-  
   if (!baseurl) {
     throw Error('Environment variable "ApiBaseUrl" is not set!');
   }
@@ -14,10 +13,16 @@ const buildRequest = (method, path, data) => {
     baseurl = baseurl.replace('https://', '');
   }
 
+  let apiPath = path;
+
+  if (path.startsWith('/')) {
+    apiPath = apiPath.substr(1);
+  }
+
   const request = {
     host: baseurl,
     method,
-    url: `https://${baseurl}/${path}`,
+    url: `https://${baseurl}/${apiPath}`,
     path,
     region,
     headers: {
