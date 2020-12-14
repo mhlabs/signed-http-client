@@ -59,7 +59,21 @@ const get = async path => {
   return axios(signedRequest);
 };
 
+const remove = async path => {
+  const request = buildRequest('DELETE', path);
+  const signedRequest = signRequest(request);
+  return axios(signedRequest);
+};
+
+const put = async path => {
+  const request = buildRequest('PUT', path);
+  const signedRequest = signRequest(request);
+  return axios(signedRequest);
+};
+
 module.exports = {
   post,
-  get
+  get,
+  remove,
+  put
 };
