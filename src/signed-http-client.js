@@ -65,8 +65,8 @@ const remove = async path => {
   return axios(signedRequest);
 };
 
-const put = async path => {
-  const request = buildRequest('PUT', path);
+const put = async (path, data) => {
+  const request = buildRequest('PUT', path, data);
   const signedRequest = signRequest(request);
   return axios(signedRequest);
 };
