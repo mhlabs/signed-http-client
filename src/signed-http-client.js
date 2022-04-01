@@ -3,6 +3,11 @@ const aws4 = require('aws4');
 
 let baseurl = process.env.ApiBaseUrl;
 const region = process.env.AWS_REGION || 'eu-west-1';
+let headers = {};
+
+const setGlobalHeaders = header => {
+  headers = { ...headers, ...header };
+};
 
 const buildRequest = (method, path, data) => {
   if (!baseurl) {
@@ -26,6 +31,7 @@ const buildRequest = (method, path, data) => {
     path,
     region,
     headers: {
+      ...headers,
       'content-type': 'application/json'
     },
     service: 'execute-api'
@@ -72,6 +78,7 @@ const put = async (path, data) => {
 };
 
 module.exports = {
+  setGlobalHeaders,
   post,
   get,
   remove,
