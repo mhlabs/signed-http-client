@@ -14,9 +14,9 @@ afterAll(() => {
   process.env = OLD_ENV;
 });
 
-describe('setGlobalHeaders', () => {
+describe('pushGlobalHeaders', () => {
   it('should single header', async () => {
-    tested.setGlobalHeaders({
+    tested.pushGlobalHeaders({
       'x-correlation-id': 'test-id'
     });
 
@@ -31,7 +31,7 @@ describe('setGlobalHeaders', () => {
   });
 
   it('should set many headers', async () => {
-    tested.setGlobalHeaders({
+    tested.pushGlobalHeaders({
       'x-correlation-id': 'test-id',
       'x-some-other-id': 'some-other-id'
     });

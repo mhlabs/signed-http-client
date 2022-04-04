@@ -5,7 +5,7 @@ let baseurl = process.env.ApiBaseUrl;
 const region = process.env.AWS_REGION || 'eu-west-1';
 let globalHeaders = {};
 
-const setGlobalHeaders = headers => {
+const pushGlobalHeaders = headers => {
   globalHeaders = { ...globalHeaders, ...headers };
 };
 
@@ -78,7 +78,7 @@ const put = async (path, data) => {
 };
 
 module.exports = {
-  setGlobalHeaders,
+  pushGlobalHeaders,
   post,
   get,
   remove,
