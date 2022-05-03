@@ -1,8 +1,15 @@
 const axios = require('axios');
-const aws4 = require('aws4');
+const { aws4Interceptor } = require('aws4-axios');
 
 let baseurl = process.env.ApiBaseUrl;
 const region = process.env.AWS_REGION || 'eu-west-1';
+
+const interceptor = aws4Interceptor({
+  region,
+  service: "execute-api",
+});
+
+axios.interceptors.request.use(interceptor);
 
 const buildRequest = (method, path, data) => {
   if (!baseurl) {
@@ -40,35 +47,24 @@ const buildRequest = (method, path, data) => {
   return request;
 };
 
-const signRequest = request => {
-  const signedRequest = aws4.sign(request);
-  delete signedRequest.headers.Host;
-  delete signedRequest.headers['Content-Length'];
-  return signedRequest;
-};
-
 const post = async (path, data) => {
   const request = buildRequest('POST', path, data);
-  const signedRequest = signRequest(request);
-  return axios(signedRequest);
+  return axios(request);
 };
 
 const get = async path => {
   const request = buildRequest('GET', path);
-  const signedRequest = signRequest(request);
-  return axios(signedRequest);
+  return axios(request);
 };
 
 const remove = async path => {
   const request = buildRequest('DELETE', path);
-  const signedRequest = signRequest(request);
-  return axios(signedRequest);
+  return axios(request);
 };
 
 const put = async (path, data) => {
   const request = buildRequest('PUT', path, data);
-  const signedRequest = signRequest(request);
-  return axios(signedRequest);
+  return axios(request);
 };
 
 module.exports = {
